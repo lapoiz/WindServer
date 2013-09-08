@@ -22,13 +22,15 @@ Installation de WindServer
 	php composer.phar update
 	```
 	A noter que nous sommes en `including require-dev` pour pouvoir utiliser les fixtures (chargement de données initiales)
+	Si l'erreur suivant apparait: `The process timed-out`, utilisez: `COMPOSER_PROCESS_TIMEOUT=4000 php composer.phar update`
 
 
 * Tester si tout est OK, et suivre les recommandations 
 	```
 	php app/check.php
 	```
-
+* Verifier la version de Symfony
+	```php app/console -version```
 
 * Acceder au script de configuration
 	Modifier les droits (souvent nécessaire):
@@ -43,20 +45,19 @@ Installation de WindServer
 	Vous pouvez également le modifier: `app/config/parameters.yml`
 
 
-* Test que toous est OK
-	Aller avec votre navigateur sur: `http://www.votreserveur.com/WindServer/web/app_dev.php/hello/Damien`
-
 ### Installation des éléments 
 
 * Creation de la BD et création des tables
 	```
 	php app/console doctrine:database:create
 	php app/console doctrine:schema:update --force
+	php app/console doctrine:generate:entities LaPoizWindBundle
 	```
 
 * Intialiser le site avec un site: Saint Aubin (que vous pourez effacer ultérieurement)
-	```
-	php app/console doctrine:generate:entities LaPoizWindBundle
+	```	
+	php app/console doctrine:fixtures:load --fixtures=src/LaPoiz/WindBundle/DataFixture/
+	php app/console lapoiz:getData
 	```
 
 * 2 dernières commandes 

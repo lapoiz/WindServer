@@ -63,6 +63,7 @@ class SpotController extends Controller
 				$dataGraph = TransformeToHighchartsData::transformePrevisionDateList($previsionDateList);
 				$jsonData = TransformeToHighchartsDataTabForJson::transformePrevisionDateList($previsionDateList);
 				$dataGraphArray[]= array("dataWindPrev"=>$dataWindPrev, "dataGraph"=>$dataGraph, "jsonData"=>$jsonData);
+				// jsonData n'est actuellement pas utilisé
 			}
 			
 			$xAxisGraphData = TransformeToHighchartsData::createElemForXAxisHighchart($dataGraphArray);
