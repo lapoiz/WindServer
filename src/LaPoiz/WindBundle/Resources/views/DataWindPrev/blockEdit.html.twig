@@ -1,0 +1,7 @@
+<form id="dataWindPrevForm" class="adminform" 
+	action="{% if dataWindPrev.id %}{{ path('_ajax_dataWindPrev_update', { 'id': dataWindPrev.id }) }}
+			{% else %}{{ path('_ajax_spot_add_website')}}{% endif %}" method="post" }}>
+	
+	{{ form_widget(form) }}
+</form>  
+

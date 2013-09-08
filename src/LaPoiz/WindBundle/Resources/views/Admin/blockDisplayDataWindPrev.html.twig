@@ -1,0 +1,21 @@
+{% macro view(dataWindPrev) %}
+
+	
+	<h3>
+		{{ dataWindPrev.spot.nom }} - {{ dataWindPrev.website.nom }}
+	</h3>
+	
+		<ol>
+			<li>{{ "admin.dataWindPrev.display.label.date.created" | trans }}: {{ dataWindPrev.created | date("d/m/Y")}}</li>
+			
+			<li>{{ "admin.dataWindPrev.display.label.slot.time" | trans }}: {{ dataWindPrev.slotTime}}</li>
+
+			<li>{{ "admin.dataWindPrev.display.label.url" | trans }}: <a href="{{ dataWindPrev.url}}">{{ dataWindPrev.url}}</a></li>			
+			
+			<li>{{ "admin.dataWindPrev.display.label.date.last.analyse" | trans }}: ...</li>
+			
+			<li>{{ "admin.dataWindPrev.display.label.nb.analyse" | trans }}: ...</li>
+		</ol>
+
+{% endmacro %}
+

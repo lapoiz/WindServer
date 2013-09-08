@@ -1,0 +1,97 @@
+{% macro view(dataWindPrev,step, chrono	) %}
+
+	<button class="button_test{{ step>=1?"_done":"" }}"  onClick="step1();" >
+				<span class="test">{{ "admin.dataWindPrev.button.test.step1" | trans }}</span>
+	</button>
+			
+	<button class="button_test{{ step>=2?"_done":"" }}"  onClick="step2();" >
+				<span class="test">{{ "admin.dataWindPrev.button.test.step2" | trans }}</span>
+	</button>
+			
+	<button class="button_test{{ step>=3?"_done":"" }}"  onClick="step3();" >
+				<span class="test">{{ "admin.dataWindPrev.button.test.step3" | trans }}</span>
+	</button>
+			
+	<button class="button_test{{ step>=4?"_done":"" }}"  onClick="save();" >
+				<span class="test">{{ "admin.dataWindPrev.button.test.save" | trans }}</span>
+	</button>
+	
+	
+	
+	<br />			
+	{% set steps = {10: 'admin.dataWindPrev.test.label.step.error',
+					0: 'admin.dataWindPrev.test.label.step.start',
+					1: 'admin.dataWindPrev.test.label.step.getPage',
+					2: 'admin.dataWindPrev.test.label.step.analyse',
+					3: 'admin.dataWindPrev.test.label.step.transforme',
+					4: 'admin.dataWindPrev.test.label.step.save'} %}
+	<div class="info">	
+				
+		<span class="label">{{ "admin.dataWindPrev.test.label.step" | trans }} {{ step }}:</span> {{ steps[step] | trans }} 
+		<br /> 
+		<span class="label">{{ "admin.dataWindPrev.test.label.chrono" | trans }}: {{ chrono }} </span> 
+	</div>
+<script>
+function step1(){
+	$('#info').html('<img src="{{ asset('bundles/lapoizwind/images/loading.gif') }}" alt="Loading Ajax data" />');
+    var id = {{ dataWindPrev.id }};
+    $.ajax({
+        type: "POST",
+        url: "{{ path('_ajax_dataWindPrev_test_step1', {'id':dataWindPrev.id})}}",
+        id: id,
+        cache: false,
+        success: function(data){
+           $('#result').html(data);
+        }
+    });    
+    return false;
+};
+
+function step2(){
+	$('#info').html('<img src="{{ asset('bundles/lapoizwind/images/loading.gif') }}" alt="Loading Ajax data" />');
+    var id = {{ dataWindPrev.id }};
+    $.ajax({
+        type: "POST",
+        url: "{{ path('_ajax_dataWindPrev_test_step2', {'id':dataWindPrev.id})}}",
+        id: id,
+        cache: false,
+        success: function(data){
+           $('#result').html(data);
+        }
+    });    
+    return false;
+};
+
+function step3(){
+	$('#info').html('<img src="{{ asset('bundles/lapoizwind/images/loading.gif') }}" alt="Loading Ajax data" />');
+    var id = {{ dataWindPrev.id }};
+    $.ajax({
+        type: "POST",
+        url: "{{ path('_ajax_dataWindPrev_test_step3', {'id':dataWindPrev.id})}}",
+        id: id,
+        cache: false,
+        success: function(data){
+           $('#result').html(data);
+        }
+    });    
+    return false;
+};
+
+
+function save(){
+	$('#info').html('<img src="{{ asset('bundles/lapoizwind/images/loading.gif') }}" alt="Loading Ajax data" />');
+    var id = {{ dataWindPrev.id }};
+    $.ajax({
+        type: "POST",
+        url: "{{ path('_ajax_dataWindPrev_test_save', {'id':dataWindPrev.id})}}",
+        id: id,
+        cache: false,
+        success: function(data){
+           $('#result').html(data);
+        }
+    });    
+    return false;
+};
+</script>	
+				
+{% endmacro %}

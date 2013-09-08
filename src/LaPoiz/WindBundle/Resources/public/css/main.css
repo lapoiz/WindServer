@@ -1,0 +1,100 @@
+
+html{
+	color:#000;
+	background:#EEE;
+}
+
+/***********  Header  ***********/
+
+
+header 
+{
+	border-spacing:0px;
+}
+
+#logoImg 
+{
+  	height:50px;
+}
+.headerSecondBlock
+{
+	height:50px;
+	width:auto;
+	background-image:url('../images/cadre/LigneHaut.png');
+	background-size: auto 50px;
+	background-repeat:repeat-x;
+	display: inline-block;
+	vertical-align: top;
+  	padding:0px;
+  	border-spacing:0px;
+}
+#logoIndex 
+{
+	padding:0px;
+	border-spacing:0px;
+}
+#connexion 
+{
+	display: inline-block;
+	vertical-align: bottom;
+}
+#link_admin
+{
+	display: inline-block;
+	vertical-align: bottom;
+}
+#logoIndex, #language_choice, #link_admin 
+{
+	display: inline-block;
+	vertical-align: top;
+}
+
+/********** Section *************/
+
+#contenu
+{
+	display: inline-block;
+	vertical-align:top;	
+  	padding:5px;
+  	margin-left: auto;
+  	margin-right: auto;
+  	width: 80%;
+}
+ 
+ #nav_article {
+ 	display: inline-block;
+	vertical-align:top;			
+  	padding:5px;
+  	
+ 	width-min: 150px;
+ }
+
+/* Contenu */
+article 
+{
+    display: inline-block;
+    vertical-align: top;
+    padding: 10px;
+    background-color: #FFFFFF;
+    color: #555555;
+    margin: 0px;
+	border: 2px solide #555555;
+	border-radius: 10px;
+	width: 90%;
+}
+
+
+
+/* Right */
+/*aside
+{
+    display: inline-block;
+    vertical-align: top;
+    background-color: #FFFFFF;
+    color: #555555;
+    border: 2px solide #555555;
+	border-radius: 10px;
+}
+*/
+
+

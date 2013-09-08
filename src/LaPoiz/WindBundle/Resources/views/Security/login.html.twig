@@ -1,0 +1,41 @@
+{% extends 'LaPoizWindBundle:Default:base.html.twig' %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('bundles/lapoizwind/css/form.css') }}" />            
+{% endblock %}
+
+{% block title %}Authentification requise{% endblock %}
+
+ 
+ {% block articleTitle %}
+ 	Authentifiez vous
+ {% endblock %}
+ 
+{% block contenu %}
+
+	{% if error %}
+		<div>{{ error.message }}</div>
+	{% endif %}
+
+ 
+
+<form action="{{ path('login_check') }}" method="post">
+       
+        <input type="hidden" name="_target_path" value="{{ url('_admin') }}" />
+
+        <p>
+            <label for="username">{{ "auth.username.label" | trans }}:</label>
+            <input type="text" id="username" name="_username" value="{{ last_username }}" />
+        </p>
+        
+        <p>
+            <label for="password">{{ "auth.password.label" | trans }}:</label>
+            <input type="password" id="password" name="_password" />
+        </p>  
+        
+        <button class="lapoiz_button" type="submit" value="login" >
+    		<span class="login">{{ "auth.button.login" | trans }}</span></button>
+    	
+        
+    </form>
+{% endblock %}

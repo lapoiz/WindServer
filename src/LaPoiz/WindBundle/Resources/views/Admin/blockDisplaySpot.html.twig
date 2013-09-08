@@ -1,0 +1,139 @@
+{% macro view(spot) %}
+
+		
+		<div id="dialog-edit-form" title="{{ "admin.window.title.spot.edit" | trans }}"> Nothing</div>
+		
+		<div id="blockDescription">
+			{% from "LaPoizWindBundle:Spot:blockDescription.html.twig" import view %}
+		   	{{ view(spot) }}
+	   	</div>
+
+		<br />
+		
+			
+			<button class="lapoiz_button" id="adminSpot_button_edit" >
+				<span class="edit">{{ "admin.button.edit" | trans }}</span>
+			</button>
+
+			<button class="lapoiz_button" id="adminSpot_button_delete"  onClick="deleteAction();">
+				<span class="delete">{{ "admin.button.delete" | trans }}</span>
+			</button>
+
+
+			<div id="dialog-confirm-delete" title="notification.validation.delete.spot.title">
+			  <p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>
+			        {{ "notification.validation.delete.spot.content" | trans }}
+			  </p>
+			</div>
+
+			<script>
+				$(function() {
+					
+					$( "#dialog-edit-form" ).dialog({
+						autoOpen: false,
+						height: 600,
+						width: 400,
+						modal: true,
+						buttons: {
+								'{{ "admin.button.save" | trans }}': 
+									function() {			
+										sendSpotForm(this);			
+									},
+								'{{ "admin.button.cancel" | trans }}' : function() {
+									$( this ).dialog( "close" );
+								}
+								},
+						'{{ "admin.button.cancel" | trans }}': function() {
+							;
+						}
+					});
+					$( "#adminSpot_button_edit" ).click(function() {
+						$( "#dialog-edit-form" ).dialog( "open" );
+						$( "#dialog-edit-form" ).html('<img src="{{ asset('bundles/lapoizwind/images/loading.gif') }}" alt="Loading Ajax data" />');
+					    var id = {{ spot.id }};
+						$.ajax({
+					        type: "POST",
+					        url: "{{ path('_ajax_spot_edit', {'id':spot.id})}}",
+					        id: id,
+					        cache: false,
+					        success: function(data){
+						           $('#dialog-edit-form').html(data);				           
+						    }
+					    });    
+					    return false;		
+					});
+
+				    $( "#dialog-confirm-delete" ).dialog({
+					        autoOpen: false,
+					        resizable: false,
+					        height:250,
+					        modal: true,
+					        buttons: {
+					            '{{ "admin.button.confirm" | trans }}': 
+					                function() {
+					                    $( this ).dialog( "close" );
+					                    document.location.href="{{ path('_admin_spot_delete', {'id':spot.id} )}}";
+					                },
+					            '{{ "admin.button.cancel" | trans }}': 
+					                function() {
+					                    $( this ).dialog( "close" );
+					                }
+					        }
+				    });
+				});
+
+				function sendSpotForm(windowSpot) {
+					var data_string= $("#editSpotForm").serialize();
+					
+					$( "#dialog-edit-form" ).html('<img src="{{ asset('bundles/lapoizwind/images/loading.gif') }}" alt="Loading Ajax data" />');
+					var id = {{ spot.id }};
+					
+					$.ajax({
+		                type: "POST",
+		                data: data_string,
+				        url: "{{ path('_ajax_spot_update', {'id':spot.id})}}",
+				        id: id,
+				        cache: false,
+				        dataType: 'json',
+				        success: function(json){
+				        	if(json.success) {
+		                        // save is OK
+				        		$( "#dialog-edit-form" ).dialog( "close" );
+				        		
+				        		$('body').notif({title:'{{ "notification.info.spot.save.title" | trans }}',content:'{{ "notification.info.spot.save.content" | trans }}',cls:'success', timeout:'4000'});
+				        		//location.assign(location.href);;
+								reLoadDescription();        		
+		                    } else {
+		                        $('#dialog-edit-form').html(json.form);
+		                    }
+				        }
+				    });    
+				    return false;
+				    
+					//$( windowSpot ).dialog( "close" );
+				}
+				
+				function reLoadDescription() {					
+					$( "#blockDescription" ).html('<img src="{{ asset('bundles/lapoizwind/images/loading.gif') }}" alt="Loading Ajax data" />');
+					var id = {{ spot.id }};
+					
+					$.ajax({
+		                type: "GET",
+				        url: "{{ path('_ajax_spot_description', {'id':spot.id})}}",
+				        id: id,
+				        cache: false,
+				        success: function(data){
+				        	$('#blockDescription').html(data);
+				        }
+				    });    
+				    return false;
+				}
+
+
+				function deleteAction() {
+				    $( "#dialog-confirm-delete" ).dialog( "open" );
+				};
+			</script>
+							
+
+{% endmacro %}

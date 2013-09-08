@@ -1,0 +1,10 @@
+	
+<div>
+   	{% from "LaPoizWindBundle:Ajax:blockTestAction.html.twig" import view %}
+   	{{ view(dataWindPrev,step,chrono) }}   
+</div>
+
+<div id="info">
+	{% from "LaPoizWindBundle:Ajax:blockTestDisplayInfo.html.twig" import view %}
+	{{ view(info, typeDisplay ) }}
+</div>

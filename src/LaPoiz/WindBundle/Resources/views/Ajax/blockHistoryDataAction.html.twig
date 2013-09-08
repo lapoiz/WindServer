@@ -1,0 +1,61 @@
+{% macro view(dataWindPrev) %}
+
+		
+	<form name="dateAnalyseForm">			
+		<label for="dateAnalyse">{{ "admin.dataWindPrev.analyse.date.analyse" | trans }}</label>
+		<input type="date" name="dateAnalyse">
+	</form>	
+		<button class="button_action"  onClick="getDataFromDateAnalyse();" >
+					<span class="display">{{ "admin.dataWindPrev.button.analyse.display" | trans }}</span>
+		</button>
+		
+		
+	<form name="datePrevForm">	
+		<label for="datePrevision">{{ "admin.dataWindPrev.analyse.date.prevision" | trans }}</label>
+		<input type="date" name="datePrevision" value="">		
+	</form>	
+		<button class="button_action"  onClick="getDataForDatePrevision();" >
+					<span class="display">{{ "admin.dataWindPrev.button.analyse.display" | trans }}</span>
+		</button>
+	
+	
+<script>
+function getDataFromDateAnalyse(){
+	$('#result_second_level').html('<img src="{{ asset('bundles/lapoizwind/images/loading.gif') }}" alt="Loading Ajax data" />');
+	
+    var id = {{ dataWindPrev.id }};
+    var url="{{ path('_ajax_dataWindPrev_history_data_from_date_analyse', {'id':dataWindPrev.id, 'date':'dateAnalyseInput'})}}";
+	url=url.replace('dateAnalyseInput',document.forms["dateAnalyseForm"].elements["dateAnalyse"].value);
+    $.ajax({
+        type: "POST",
+        url: url,
+        id: id,
+        cache: false,
+        success: function(data){
+           $('#result_second_level').html(data);
+        }
+    });    
+    return false;
+};
+
+function getDataForDatePrevision(){
+	$('#result_second_level').html('<img src="{{ asset('bundles/lapoizwind/images/loading.gif') }}" alt="Loading Ajax data" />');
+	
+    var id = {{ dataWindPrev.id }};
+	var url= "{{ path('_ajax_dataWindPrev_history_data_for_dateprev', {'id':dataWindPrev.id, 'date':'datePrevisionInput'})}}";
+	url=url.replace('datePrevisionInput',document.forms["datePrevForm"].elements["datePrevision"].value);
+    $.ajax({
+        type: "POST",
+        url: url,
+        id: id,
+        cache: false,
+        success: function(data){
+           $('#result_second_level').html(data);
+        }
+    });    
+    return false;
+};
+
+</script>	
+				
+{% endmacro %}

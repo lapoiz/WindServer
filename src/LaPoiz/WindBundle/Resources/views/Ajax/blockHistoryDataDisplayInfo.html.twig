@@ -1,0 +1,15 @@
+	<h2>{{ date | date("d/m/Y") }}</h2>
+	<table class="data">
+		<tr><td>{{ "admin.dataWindPrev.date.analyse" | trans }}</td></tr>
+    {% for previsionDate in listPrevisionDate %}
+    	<tr>
+    		<td>{{ previsionDate.created | date("d/m/Y") }}</td>
+    	{% for prevision in previsionDate.listPrevision %}
+    		<td>
+    			{{ prevision.time | date("h") }}h : {{ prevision.wind }} 
+    		</td>
+    	{% endfor %}
+    	</tr>
+	{% endfor %}
+	</table>
+  				

@@ -1,0 +1,30 @@
+label {
+	display: block;
+}
+
+input {
+	width: 250px;
+	padding: 4px;
+	border: 1px solide #555;
+}
+
+input[type="submit"] {
+	width: auto;
+	padding: 4px 15px;
+	background: #444;
+	color: #FFF;
+	cursor: pointer;
+	border-radius: 10px;
+}
+
+#remember_me {
+	width: 20px;
+}
+#remember_me + label {
+	display: inline;	
+}
+
+fieldset {
+	border-radius: .5em;
+}
+

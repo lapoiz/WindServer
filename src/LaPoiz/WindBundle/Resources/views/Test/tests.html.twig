@@ -1,0 +1,27 @@
+{% extends 'LaPoizWindBundle:Admin:index.html.twig' %}
+
+
+ 
+{% block title %}Liste des Tests{% endblock %}
+
+
+{% block contenu %}
+	<ul>
+		<li><a class="link_object" href="{{ path('_test_info') }}">
+					PHPInfo</a></li>
+
+		<li><a class="link_object" href="{{ path('_test_notification') }}">
+					Test sur les notifications JQuery + CSS3</a></li>
+
+		<li><a class="link_object" href="{{ path('_test_multiselect') }}">
+					Test de selection multiple</a></li>
+
+		<li><a class="link_object" href="{{ path('_test_ajax_create_dataWindPrev', {'id':1}) }}">
+					Test de l'envoie du formulaire pour la création d'un DataWindPrev</a></li>
+
+		<li><a class="link_object" href="{{ path('_test_ajax_create_spot') }}">
+					Test de l'envoie du formulaire pour la création d'un Spot</a></li>
+
+	</ul>
+
+{% endblock %}

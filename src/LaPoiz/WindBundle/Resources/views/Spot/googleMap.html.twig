@@ -1,0 +1,55 @@
+{% macro view(gpsLong, gpsLat) %}
+
+<script type="text/javascript"
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBsZg9TbRTh7n4zfPArWf3lqVLdVB1xlko&sensor=false">
+</script>
+
+<div id="map_canvas" style="width:100%; height:400px">The Map</div>
+
+<script type="text/javascript">
+      function initializeMap() {
+        var myLatlng = new google.maps.LatLng({{ gpsLong }},{{ gpsLat }});
+        
+        var mapOptions = {
+          center: myLatlng,
+          zoom: 14,
+          mapTypeId: google.maps.MapTypeId.HYBRID
+        };
+        
+        var map = new google.maps.Map(document.getElementById("map_canvas"),
+            mapOptions);
+        
+        var contentString = 'Bla bla bla';
+        					
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            map: map,
+            title:"Title of marker"
+        });
+
+        //var image = '{{ asset('bundles/lapoizwind/images/logoLaPoizWind.png') }}';
+        //var laPoizWindMarker = new google.maps.Marker({
+        //    position: myLatlng,
+        //    map: map,
+        //    icon: image
+        //});
+        
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.open(map,marker);
+        });
+        google.maps.event.trigger(map, 'resize');
+      
+      }
+
+      $( "#descriptionTab" ).click(function() {
+        initializeMap();// en attendant de trouver un system permettant de charger l'ensemble des javascript en fin de chargement de la page type: <body onload="initialize()">
+      });
+</script>
+
+
+
+{% endmacro %}

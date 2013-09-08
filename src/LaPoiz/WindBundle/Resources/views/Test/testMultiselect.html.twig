@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Test Multiselect</title>
+		
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script type="text/javascript" src="http://code.jquery.com/ui/1.10.2/jquery-ui.min.js"></script>
+
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" />
+
+        <link rel="stylesheet" href="{{ asset('bundles/lapoizwind/css/test/common.css') }}" />
+        <link rel="stylesheet" href="{{ asset('bundles/lapoizwind/css/jquery/ui.multiselect.css') }}" />
+
+		<script type="text/javascript" src="{{ asset('bundles/lapoizwind/js/libs/multiselect/ui.multiselect.js') }}"></script>
+	</head>
+	<body>
+		<select id="countries" class="multiselect" multiple="multiple" name="countries[]">
+			<option value="AFG">Afghanistan</option>
+			<option value="ALB">Albania</option>
+			<option value="DZA">Algeria</option>
+			<option value="AND">Andorra</option>
+			<option value="ARG">Argentina</option>
+			<option value="ARM">Armenia</option>
+			<option value="ABW">Aruba</option>
+			<option value="AUS">Australia</option>
+			<option value="AUT" selected="selected">Austria</option>		
+		</select>
+
+
+		<script type="text/javascript">
+			$(function(){
+				// choose either the full version
+				$(".multiselect").multiselect();
+				// or disable some features
+				$(".multiselect").multiselect({sortable: false, searchable: false});
+			});
+		</script>
+	</body>
+	
+</html>

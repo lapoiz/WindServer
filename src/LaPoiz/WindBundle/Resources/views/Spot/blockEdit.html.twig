@@ -1,0 +1,6 @@
+
+<form id="editSpotForm" class="adminform" action="{% if spot.id %}{{ path('_ajax_spot_update', { 'id': spot.id }) }}{% else %}{{ path('_ajax_spot_create')}}{% endif %}" method="post" }}>
+	
+		{{ form_widget(form) }}
+	
+</form>  

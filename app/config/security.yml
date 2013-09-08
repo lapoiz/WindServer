@@ -1,0 +1,23 @@
+security:
+    encoders:
+        LaPoiz\WindBundle\Entity\User: plaintext
+
+
+    providers:
+        main:
+            entity: { class: LaPoiz\WindBundle\Entity\User, property: username }
+
+    firewalls:
+
+        secured_area:
+            pattern:    ^/ 
+            anonymous: ~
+            form_login:
+                check_path: /login_check
+                login_path: /login
+            logout:
+                path: /logout
+                target: /
+
+    access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }

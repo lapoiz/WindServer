@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Test Notification</title>
+		<link rel="stylesheet" type="text/css" href="{{ asset('bundles/lapoizwind/css/notif.css') }}">
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script type="text/javascript" src="{{ asset('bundles/lapoizwind/js/mustache.js') }}"></script>
+		<script type="text/javascript" src="{{ asset('bundles/lapoizwind/js/jquery.notif.js') }}"></script>
+	</head>
+	<body>
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<button class="add animated fadeInLeft">Add notif</button>
+
+	</body>
+	<script type="text/javascript">
+		$('.add').click(function(event){
+			event.preventDefault();
+			jQuery('body').notif({icon:'&#10003;',title:'big mistake',content:'what the fuck',cls:'success', timeout:'6000'});
+		})
+	</script>
+</html>

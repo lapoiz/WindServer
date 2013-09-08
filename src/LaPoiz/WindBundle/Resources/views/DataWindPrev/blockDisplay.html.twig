@@ -1,0 +1,27 @@
+{% macro view(dataWindPrev) %}
+
+<div>
+	<h3>{{ dataWindPrev.spot.nom }} - {{ dataWindPrev.website.nom }}</h3>
+	<fieldset>
+		<legend>G&eacute;n&eacute;ral</legend>
+		<ol>	
+			<li>
+			Spot: {{ dataWindPrev.spot.nom }}
+			</li>
+		
+			<li>
+			Site web: {{ dataWindPrev.website.nom }}
+			</li>
+			
+			<li>
+			url: <a href="{{ dataWindPrev.url }}" target="_blank">lien</a>
+			</li>
+			
+			<li>
+			time : {{ dataWindPrev.slotTime }}
+			</li>
+		</ol>
+	</fieldset>
+</div>
+
+{% endmacro %}

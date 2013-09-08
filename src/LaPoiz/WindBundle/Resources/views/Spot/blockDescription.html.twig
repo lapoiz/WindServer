@@ -1,0 +1,38 @@
+{% macro view(spot,displayMap) %}
+
+<h3>{{ spot.nom }}</h3>
+
+{% if message is defined %}
+	<p>{{ message }}</p>
+{% endif %}
+
+		<fieldset>
+			<legend>{{ "spot.general.title" | trans }}</legend>
+			<ul>
+				<li>{{ "spot.label.name" | trans }}: {{ spot.nom}}</li>
+				<li>{{ "spot.label.description" | trans }}: {{ spot.description}}</li>
+				<li>{{ "spot.label.isKite" | trans }}: {{ spot.isKitePractice?"oui":"non" }}</li>
+				<li>{{ "spot.label.isWindsurf" | trans }}: {{ spot.isWindsurfPractice?"oui":"non" }}</li>
+			</ul>
+		</fieldset>
+		
+		<br />
+		
+		<fieldset>
+			<legend>{{ "spot.localisation.title" | trans }}</legend>
+			<ul>
+				<li><a href="{{ spot.googleMapURL }}">{{ "spot.label.googleMapLink" | trans }}</a></li>
+				<li>{{ "spot.label.forGoing" | trans }}: {{  spot.localisationDescription }}</li>
+				<li>{{ "spot.label.gpsData" | trans }}: ({{ spot.gpsLong }} , {{ spot.gpsLat }})</li>
+			</ul>
+
+					
+			{% if displayMap %}
+				{% from "LaPoizWindBundle:Spot:googleMap.html.twig" import view %}
+					{{ view(spot.gpsLong, spot.gpsLat) }}
+			{% endif %}
+				
+		</fieldset>
+			
+
+{% endmacro %}

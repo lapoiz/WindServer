@@ -1,0 +1,131 @@
+{% macro view(dataWindPrev) %}
+
+<div id="dataWindPrev_action">
+    
+    <button class="lapoiz_button" id="dataWindPrev_button_delete" onClick="deleteAction();" >
+                <span class="action">{{ "admin.dataWindPrev.button.delete" | trans }}</span>
+    </button>
+
+    <br />
+
+	<button class="lapoiz_button" id="dataWindPrev_button_modif_spot" onClick="modif_spot();" >
+				<span class="action">{{ "admin.dataWindPrev.button.modif.spot" | trans }}</span>
+	</button>
+				
+	<br />
+	
+	<button class="lapoiz_button" id="dataWindPrev_button_history_analyse" onClick="history_analyse();" >
+				<span class="graph">{{ "admin.dataWindPrev.button.history.analyse" | trans }}</span>
+	</button>
+				
+	<br />
+				
+	<button class="lapoiz_button"  id="dataWindPrev_button_history_data" onClick="history_data();">
+				<span class="graph">{{ "admin.dataWindPrev.button.history.data" | trans }}</span>
+	</button>
+	
+	<br />
+				
+	<button class="lapoiz_button" id="dataWindPrev_button_test" onClick="test();" >
+				<span class="graph">{{ "admin.dataWindPrev.button.test" | trans }}</span>
+	</button>
+            
+</div>	
+
+<div id="dialog-confirm" title="notification.validation.delete.dataWindPrev.title">
+  <p><span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>
+        {{ "notification.validation.delete.dataWindPrev.content" | trans }}
+  </p>
+</div>
+
+
+<script>
+function modif_spot() {
+	$('#result').html('<img src="{{ asset('bundles/lapoizwind/images/loading.gif') }}" alt="Loading Ajax data" />');
+    var id = {{ dataWindPrev.spot.id }};
+	$.ajax({
+        type: "POST",
+        url: "{{ path('_ajax_dataWindPrev_edit', {'id':dataWindPrev.spot.id})}}",
+        id: id,
+        cache: false,
+        success: function(data){
+           $('#result').html(data);
+        }
+    });    
+    return false;
+}
+
+function history_analyse(){
+	$('#result').html('<img src="{{ asset('bundles/lapoizwind/images/loading.gif') }}" alt="Loading Ajax data" />');
+    var id = {{ dataWindPrev.id }};
+    $.ajax({
+        type: "POST",
+        url: "{{ path('_ajax_dataWindPrev_history_analyse', {'id':dataWindPrev.id})}}",
+        id: id,
+        cache: false,
+        success: function(data){
+           $('#result').html(data);
+        }
+    });    
+    return false;
+};
+
+function history_data(){
+	$('#result').html('<img src="{{ asset('bundles/lapoizwind/images/loading.gif') }}" alt="Loading Ajax data" />');
+    var id = {{ dataWindPrev.id }};
+    $.ajax({
+        type: "POST",
+        url: "{{ path('_ajax_dataWindPrev_history_data', {'id':dataWindPrev.id})}}",
+        id: id,
+        cache: false,
+        success: function(data){
+           $('#result').html(data);
+        }
+    });    
+    return false;
+};
+
+function test(){
+	$('#result').html('<img src="{{ asset('bundles/lapoizwind/images/loading.gif') }}" alt="Loading Ajax data" />');
+    var id = {{ dataWindPrev.id }};
+    $.ajax({
+        type: "POST",
+        url: "{{ path('_ajax_dataWindPrev_test', {'id':dataWindPrev.id})}}",
+        id: id,
+        cache: false,
+        success: function(data){
+           $('#result').html(data);
+        }
+    });    
+    return false;
+};
+
+ 
+$(function() {
+    $( "#dialog-confirm" ).dialog({
+        autoOpen: false,
+        resizable: false,
+        height:250,
+        modal: true,
+        buttons: {
+            '{{ "admin.button.confirm" | trans }}': 
+                function() {
+                    $( this ).dialog( "close" );
+                    document.location.href="{{ path('_admin_dataWindPrev_delete', {'id':dataWindPrev.id} )}}";
+                },
+            '{{ "admin.button.cancel" | trans }}': 
+                function() {
+                    $( this ).dialog( "close" );
+                }
+        }
+    });
+});
+
+function deleteAction() {
+    $( "#dialog-confirm" ).dialog( "open" );
+};
+
+</script>	
+                
+
+{% endmacro %}

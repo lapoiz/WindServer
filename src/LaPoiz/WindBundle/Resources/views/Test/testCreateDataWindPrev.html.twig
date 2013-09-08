@@ -1,0 +1,19 @@
+{% extends 'LaPoizWindBundle:Admin:index.html.twig' %}
+
+
+ 
+{% block title %}Test create DataWindPrev{% endblock %}
+
+
+{% block contenu %}
+	{% include "LaPoizWindBundle:DataWindPrev:blockEdit.html.twig" %}
+
+	<button OnClick="sendForm()">Envoyer</button>
+
+	<script>
+		function sendForm() {			
+			$('#dataWindPrevForm').attr('action', '{{ path('_ajax_spot_add_website') }}');
+			$("#dataWindPrevForm").submit();
+		}
+	</script>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'LaPoizWindBundle:Default:base.html.twig' %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('bundles/lapoizwind/css/admin.css') }}" />
+	<link rel="stylesheet" href="{{ asset('bundles/lapoizwind/css/form.css') }}" />
+	          
+{% endblock %}
+
+
+{% block scriptGraph %}
+	{{ parent() }}
+	
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+            google.load("visualization", "1", {packages:["corechart", 'table', 'treemap', 'gauge']});
+            google.load('jquery', '1.6.0');
+        </script>      
+{% endblock %}     
+
+{% block contenu %}
+   Page administrateur
+{% endblock %}

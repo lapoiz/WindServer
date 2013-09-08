@@ -1,0 +1,13 @@
+	<table class="data">
+    {% for line in tabHistoryAnalyse %}
+    	<tr>
+    		<td>{{ line[0] | date("d/m/Y") }} <br />
+    			{{ line[0] | date("H:i:s") }}
+    		</td>
+    		{% for elem in line[1] %}
+    			<td>{{ elem[0] | date("d/m/Y") }} <br /> {{ elem[1]  }}</td>
+    		{% endfor %}
+    	</tr>
+	{% endfor %}
+	</table>
+  				

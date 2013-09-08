@@ -1,0 +1,7 @@
+parameters:
+#    la_poiz_highcharts.example.class: LaPoiz\HighchartsBundle\Example
+
+services:
+#    la_poiz_highcharts.example:
+#        class: %la_poiz_highcharts.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

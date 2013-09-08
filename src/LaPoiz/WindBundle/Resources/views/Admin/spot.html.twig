@@ -1,0 +1,21 @@
+{% extends 'LaPoizWindBundle:Admin:index.html.twig' %}
+
+{% block title %}LaPoizWind - Admin - Spots{% endblock %}
+
+
+{% block contenu %}
+	<div id="block1">
+	   	{% from "LaPoizWindBundle:Admin:blockListSpot.html.twig" import list %}
+	   	{{ list(spots) }}
+   	</div>	
+   	
+   	<div id="block2">
+	   	{% from "LaPoizWindBundle:Admin:blockDisplaySpot.html.twig" import view %}
+	   	{{ view(spot) }}
+   	</div>
+	
+   	<div id="block3">
+   		{% from "LaPoizWindBundle:Admin:blockListWebsiteSpot.html.twig" import list %}
+	   	{{ list(spot,true) }}
+   	</div>
+{% endblock %}

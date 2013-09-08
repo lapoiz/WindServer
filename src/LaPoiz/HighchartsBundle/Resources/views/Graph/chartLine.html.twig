@@ -1,0 +1,94 @@
+{% macro scriptLine(idDivChart, dataGraph) %}
+
+<script type="text/javascript">
+	$(function () {
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'divGraph_{{ idDivChart }}',
+                type: 'spline'
+            },
+            title: {
+                text: 'Wind in St Aubin...'
+            },
+            subtitle: {
+                text: 'Spot de kite par excellence'
+            },
+            xAxis: {
+                type: 'datetime',
+                dateTimeLabelFormats: { // don't display the dummy year
+                    month: '%e. %b',
+                    year: '%b'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Wind speed (nd)'
+                },
+                min: 0,
+
+                minorGridLineWidth: 0,
+                gridLineWidth: 0,
+                alternateGridColor: null,
+                plotBands: [{ // Light air
+                    from: 0,
+                    to: 12,
+                    color: 'rgba(68, 170, 213, 0.1)',
+                    label: {
+                        text: 'Light air',
+                        style: {
+                            color: '#606060'
+                        }
+                    }
+                }, { // kite planning
+                    from: 12,
+                    to: 22,
+                    color: 'rgba(0, 0, 0, 0)',
+                    label: {
+                        text: 'kite planning',
+                        style: {
+                            color: '#606060'
+                        }
+                    }
+                }, { // windsurf planning
+                    from: 22,
+                    to: 40,
+                    color: 'rgba(68, 170, 213, 0.1)',
+                    label: {
+                        text: 'windsurf planning',
+                        style: {
+                            color: '#606060'
+                        }
+                    }
+                }]
+            },
+			            
+            tooltip: {
+                formatter: function() {
+                        return '<b>'+ this.series.name +'</b><br/>'+
+                        Highcharts.dateFormat('%e. %b %Y, %H:00', this.x) +': '+ this.y  +' noeuds';
+                }
+            },
+            
+            series: [{
+                name: '{{ dataGraph['serieName']}}',
+                // Define the data points. All series have a dummy year
+                // of 2012/71 in order to be compared on the same x axis. Note
+                // that in JavaScript, months start at 0 for January, 1 for February etc.
+                data: [
+				{% for rowData in dataGraph['highchartsData'] %}
+
+					[Date.UTC({{ rowData['date'] }}), {{ rowData['wind'] }} ],   
+
+				{% endfor %}                    
+                ]
+            }]
+        });
+    });
+    
+});
+</script>
+	
+	
+{% endmacro %}	 

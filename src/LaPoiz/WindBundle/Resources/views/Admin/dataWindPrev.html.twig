@@ -1,0 +1,28 @@
+{% extends 'LaPoizWindBundle:Admin:index.html.twig' %}
+
+{% block title %}{{ "admin.dataWindPrev.title" | trans }}{% endblock %}
+
+
+{% block contenu %}
+
+	<div id="block1">
+	   	{% from "LaPoizWindBundle:Admin:blockActionDataWindPrev.html.twig" import view %}
+	   	{{ view(dataWindPrev) }}
+   	</div>	
+   	
+   	<div id="block2">
+	   	{% from "LaPoizWindBundle:Admin:blockDisplayDataWindPrev.html.twig" import view %}
+	   	{{ view(dataWindPrev) }}
+   	</div>
+	
+   	<div id="block3">
+   		{% from "LaPoizWindBundle:Admin:blockListSpotWebSite.html.twig" import list %}
+	   	{{ list(dataWindPrev.website, false) }}
+	   	
+   		{% from "LaPoizWindBundle:Admin:blockListWebsiteSpot.html.twig" import list %}
+	   	{{ list(dataWindPrev.spot, false) }}
+   	</div>
+	
+	<div id="result"></div>
+	
+{% endblock %}

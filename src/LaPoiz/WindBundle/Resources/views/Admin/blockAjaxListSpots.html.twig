@@ -1,0 +1,12 @@
+
+			
+			{% for spot in spots %}
+				<p>
+					<span></span><a class="link_object"  href="{{ path('_admin_spot_display', {'id':spot.id}) }}">
+						{{ spot.nom }}
+					</a></span>
+				{% else %}
+					<div id="warning">{{ "warning.list.spot.notFound" | trans }}</div>
+				</p>
+			{% endfor %}
+		

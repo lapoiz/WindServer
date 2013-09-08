@@ -1,0 +1,8 @@
+{% extends 'LaPoizWindBundle:Default:base.html.twig' %}
+
+{% block nav_article %}
+	<div id="nav">
+	   	{% from "LaPoizWindBundle:Spot:blockList.html.twig" import list %}
+	   	{{ list(spots) }}
+   	</div>
+{% endblock %}

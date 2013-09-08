@@ -1,0 +1,19 @@
+<!DOCTYPE html >
+<html>
+	<head>
+   	
+	   	{% from "LaPoizHighchartsBundle:Default:script.html.twig" import headScript %}
+    	{{ headScript() }}
+    
+	</head>
+	<body>
+    
+	    <h1>Line <span>charts</span></h1>
+	    
+	    <div id="graph" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+	    
+	    {% from "LaPoizHighchartsBundle:Graph:chartLine.html.twig" import scriptLine %}    	
+	    	{{ scriptLine("graph","table", highchartsData) }}
+
+	</body>
+</html>

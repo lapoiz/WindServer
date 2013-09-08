@@ -1,0 +1,93 @@
+{% macro list(spots) %}
+	
+   		<h3>{{ "admin.list.spot.title" | trans }}</h3>
+		
+		<div id="dialog-add-spot" title="{{ "admin.window.title.spot.add" | trans }}"> Nothing</div>
+   		<button class="lapoiz_button" id="adminSpot_button_add" >
+				<span class="add">{{ "admin.button.add" | trans }}</span>
+		</button>		
+
+		<div id="blockListSpots">	
+			{% include "LaPoizWindBundle:Admin:blockListSpots.html.twig" %}
+		</div>	
+		
+			<script>
+				$(function() {
+					
+					$( "#dialog-add-spot" ).dialog({
+							autoOpen: false,
+							height: 600,
+							width: 400,
+							modal: true,
+							buttons: {
+								'{{ "admin.button.save" | trans }}': 
+									function() {			
+										sendAddSpotForm(this);			
+									},
+								'{{ "admin.button.cancel" | trans }}' : function() {
+									$( this ).dialog( "close" );
+								}
+							},
+							close: function() {;}
+					});
+
+					$( "#adminSpot_button_add" ).click(function() {
+						$( "#dialog-add-spot" ).dialog( "open" );
+						$( "#dialog-add-spot" ).html('<img src="{{ asset('bundles/lapoizwind/images/loading.gif') }}" alt="Loading Ajax data" />');
+					    
+						$.ajax({
+					        type: "POST",
+					        url: "{{ path('_ajax_get_add_spot_form') }}",
+					        cache: false,
+					        success: function(data){
+						           $('#dialog-add-spot').html(data);				           
+						    }
+					    });    
+					    return false;		
+					});
+				});
+
+				function sendAddSpotForm(windowAddSpot) {
+					var data_string= $("#editSpotForm").serialize();
+					
+					$( "#dialog-add-spot" ).html('<img src="{{ asset('bundles/lapoizwind/images/loading.gif') }}" alt="Loading Ajax data" />');
+					
+					$.ajax({
+		                type: "POST",
+		                data: data_string,
+				        url: "{{ path('_ajax_spot_create')}}",
+				        cache: false,
+				        dataType: 'json',
+				        success: function(json){
+				        	if(json.success) {
+		                        // save is OK
+				        		$( "#dialog-add-spot" ).dialog( "close" );
+				        		
+				        		$('body').notif({title:'{{ "notification.info.spot.add.title" | trans }}',content:'{{ "notification.info.spot.add.content" | trans }}',cls:'success', timeout:'4000'});
+				        		//location.assign(location.href);;
+								reLoadList();        		
+		                    } else {
+		                        $('#dialog-add-spot').html(json.form);
+		                    }
+				        }
+				    });    
+				    return false;				    
+				}
+				
+				function reLoadList() {					
+					$( "#blockListSpots" ).html('<img src="{{ asset('bundles/lapoizwind/images/loading.gif') }}" alt="Loading Ajax data" />');
+					
+					$.ajax({
+		                type: "GET",
+				        url: "{{ path('_ajax_get_listSpots') }}",
+				        cache: false,
+				        success: function(data){
+				        	$('#blockListSpots').html(data);
+				        }
+				    });    
+				    return false;
+				}
+
+			</script>
+
+{% endmacro %}

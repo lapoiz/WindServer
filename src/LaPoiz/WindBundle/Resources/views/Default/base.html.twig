@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<meta charset=utf-8>
+<html>
+    <head>
+        <title>{% block title %}LaPoizWind{% endblock %}</title>
+        
+        <link rel="stylesheet" href="{{ asset('bundles/lapoizwind/css/main.css') }}" />
+        <link rel="stylesheet" href="{{ asset('bundles/lapoizwind/css/button.css') }}" />
+        <link rel="stylesheet" href="{{ asset('bundles/lapoizwind/css/notif.css') }}" />
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />  
+
+		<!-- Ne pas metre les script ici, car ne fonctionne pas -> dans body -->
+
+        {% block jQuery %}
+        {% endblock %}  
+        
+        {% block scriptGraph %}
+        {% endblock %}     
+        
+        {% block stylesheets %}
+        {% endblock %}
+        
+        
+        {% block script %}
+        {% endblock %}     
+                
+    </head>
+    
+    <body>
+    	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+		<script src="{{ asset('bundles/lapoizwind/js/mustache.js') }}"></script>
+		<script src="{{ asset('bundles/lapoizwind/js/jquery.notif.js') }}"></script>
+
+		{% for flashMessage in app.session.flashbag.get('notice') %}
+		    <div class="flash-notice">
+		        {{ flashMessage }}
+		    </div>
+		{% endfor %}
+
+		{% block notification %}
+			{% if notification is defined and notification is not null %}
+				<script>
+					$(function() {
+						$('body').notif({title:'{{ notification["title"]}}',content:'{{ notification["content"]}}',cls:'{{ notification["type"]}}', timeout:'4000'});
+					});
+				</script>
+			{% endif %}		
+        {% endblock %} 
+
+	    <header>
+	    	<div id="logoIndex"><a href="{{ path('_index') }}">
+				<img id="logoImg" src="{{ asset('bundles/lapoizwind/images/logoLaPoizWind.png') }}" alt="Logo LaPoiwWind" /></a></div>	
+	    	
+	    	<div class="headerSecondBlock">
+		    	{% block language_choice %}	    	
+			    	<div id="language_choice">Choisir la langue :
+					    <a href="{{ path('language_choice', {'langue' : 'fr'}) }}">FR</a> |
+					    <a href="{{ path('language_choice', {'langue' : 'en'}) }}">EN</a>
+					</div>
+		    	{% endblock %}
+		    	
+		    	{% block login %}	 
+		    		<div id="connexion">
+				    	{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+			   	 			{{ "header.connected.label" | trans }} {{ app.user.username }} - <a href="{{ path('logout') }}">{{ "header.connected.link.label.logout" | trans }}</a>
+						{% else %}
+			    			<a href="{{ path('login') }}">{{ "header.connected.link.label.login" | trans }}</a>
+						{% endif %}
+					</div>
+				{% endblock %}
+				
+				{% block link_admin %}	 
+		    		<div id="link_admin">
+				    	{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+			   	 			<a href="{{ path('_admin_spots') }}">{{ "header.link.label.admin" | trans }}</a>
+						{% endif %}
+					</div>
+				{% endblock %}
+			</div>
+			{% block ariane %}{% endblock %}			
+	    </header>
+	    
+		
+        <section>
+			<article>
+		       <header>
+					<div id="message">
+						{% if message is defined %}
+						<p>{{ message }}</p>
+						{% endif %}
+					</div>
+					
+					<div id="error_message">
+						{% if error_message is defined %}
+						<p>{{ error_message }}</p>
+						{% endif %}
+					</div>
+				</header>
+				
+				<!-- navigation de l'article -->
+				<div id="nav_article">
+		        	{% block nav_article %}{% endblock %}
+		        </div>
+				
+				<!-- Contenu du site -->
+				<div id="contenu">
+		        	{% block contenu %}{% endblock %}
+		        </div>                    
+			</article>
+		</section>
+    	
+        <footer>
+            <!-- Pied de page du site -->
+        </footer>
+    {% block javascripts %}{% endblock %}
+    </body>
+</html>

@@ -1,0 +1,72 @@
+{% extends 'LaPoizWindBundle:Admin:index.html.twig' %}
+
+
+	{% block jQuery %}
+		<link rel="stylesheet" href="{{ asset('bundles/lapoizwind/css/jquery/jquery-ui-custom.css') }}" />
+		
+		<script src="{{ asset('bundles/lapoizwind/js/libs/jquery/1.7.2/jquery.min.js') }}" ></script>
+	{% endblock %}
+
+{% if dataGraphe is defined %}
+	{% block scriptGraph %}
+		{% from "LaPoizHighchartsBundle:Default:script.html.twig" import headScript %}
+    	{{ headScript() }}
+	{% endblock %}
+{% endif %}
+
+	{% block script %}
+	<script>
+		$(document).ready(function() {
+    		$("#tabs").tabs();
+    		
+  		});
+	</script>
+	{% endblock %}
+ 
+{% block title %}LaPoizWind - Spot{% endblock %}
+
+
+{% block articleTitle %}
+		{{ spot.nom }}
+{% endblock %}
+
+
+{% block nav_article %}
+	   	{% from "LaPoizWindBundle:Spot:blockList.html.twig" import list %}
+	   	{{ list(spots) }}
+{% endblock %}
+
+{% block contenu %}
+	<div id="tabs">
+	    <ul>
+	        <li><a href="#graph"><span>Graph</span></a></li>
+	        <li><a href="#description" id="descriptionTab"><span>description</span></a></li>
+	        {% for dataGraph in dataGraphArray %}
+	        	<li><a href="#{{ dataGraph["dataWindPrev"].webSite.nom }}"><span>{{ dataGraph["dataWindPrev"].website.nom }}</span></a></li>
+	        {% endfor %}
+	    </ul>
+	    
+	   	<div id="graph">	   			   		
+	   			{% from "LaPoizWindBundle:DataWindPrev:blockGraphSeries.html.twig" import view %}
+	   			{{ view(dataGraphArray,xAxisGraphData) }}		   	
+	   	</div>
+	    
+	   	<div id="description">
+			{% from "LaPoizWindBundle:Spot:blockDescription.html.twig" import view %}
+	   		{{ view(spot,1) }}
+	   	</div>
+	   	
+		 {% for dataGraph in dataGraphArray %}
+		 	<div id="{{ dataGraph["dataWindPrev"].website.nom }}">
+				{% from "LaPoizWindBundle:DataWindPrev:blockDisplay.html.twig" import view %}
+	   			{{ view(dataGraph["dataWindPrev"]) }}
+	   			
+	   			{% from "LaPoizWindBundle:DataWindPrev:blockGraph.html.twig" import view %}
+	   			{{ view(dataGraph["dataWindPrev"].website.nom, dataGraph["dataGraph"]) }}				
+	   		</div>
+	        	
+	     {% endfor %}
+	 
+	</div>
+	    
+{% endblock %}

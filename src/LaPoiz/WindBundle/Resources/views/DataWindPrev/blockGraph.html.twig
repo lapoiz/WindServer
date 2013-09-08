@@ -1,0 +1,9 @@
+{% macro view(name, dataGraph) %}
+		
+	<div id="divGraph_{{ name }}">graphe here</div>
+	
+	    
+	{% from "LaPoizHighchartsBundle:Graph:chartLine.html.twig" import scriptLine %}    	
+		{{ scriptLine(name, dataGraph) }}
+	
+{% endmacro %}

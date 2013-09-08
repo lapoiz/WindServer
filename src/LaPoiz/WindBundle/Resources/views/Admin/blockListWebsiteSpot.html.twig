@@ -1,0 +1,98 @@
+{% macro list(spot, addEnable) %}
+
+   		<h3>{{ "admin.list.website.title" | trans }}</h3>
+		
+	{% if addEnable %}
+		<div id="dialog-add-website" title="{{ "admin.window.title.spot.add.website" | trans }}"> Nothing</div>
+   		<button class="lapoiz_button" id="adminWebsite_button_add" >
+				<span class="add">{{ "admin.button.add" | trans }}</span>
+		</button>
+	{% endif %}
+
+		<div id="blockListWebsites">	
+			{% include "LaPoizWindBundle:Admin:blockListWebsiteOfSpot.html.twig" %}
+		</div>
+
+	{% if addEnable %}
+		<script>
+			$(function() {
+				
+					$( "#dialog-add-website" ).dialog({
+							autoOpen: false,
+							height: 400,
+							width: 400,
+							modal: true,
+							buttons: {
+								'{{ "admin.button.save" | trans }}': 
+									function() {			
+										sendAddWebsite(this);			
+									},
+								'{{ "admin.button.cancel" | trans }}' : function() {
+									$( this ).dialog( "close" );
+								}
+							},
+							close: function() {;}
+					});
+
+					$( "#adminWebsite_button_add" ).click(function() {
+						$( "#dialog-add-website" ).dialog( "open" );
+						$( "#dialog-add-website" ).html('<img src="{{ asset('bundles/lapoizwind/images/loading.gif') }}" alt="Loading Ajax data" />');
+					    
+						$.ajax({
+					        type: "POST",
+					        url: "{{ path('_ajax_spot_get_add_website_form', {'id':spot.id}) }}",
+					        cache: false,
+					        success: function(data){
+						           $('#dialog-add-website').html(data);				           
+						    }
+					    });    
+					    return false;		
+					});
+				});
+
+				function sendAddWebsite(windowAddSpot) {
+					var data_string= $("#dataWindPrevForm").serialize();
+					
+					$( "#dialog-add-spot" ).html('<img src="{{ asset('bundles/lapoizwind/images/loading.gif') }}" alt="Loading Ajax data" />');
+					
+					$.ajax({
+		                type: "POST",
+		                data: data_string,
+				        url: "{{ path('_ajax_spot_add_website')}}",
+				        cache: false,
+				        dataType: 'json',
+				        success: function(json){
+				        	if(json.success) {
+		                        // save is OK
+				        		$( "#dialog-add-website" ).dialog( "close" );
+				        		
+				        		$('body').notif({title:'{{ "notification.info.spot.add.website.title" | trans }}',
+				        				content:'{{ "notification.info.spot.add.website.content" | trans }}',
+				        				cls:'success', timeout:'4000'});
+				        		//location.assign(location.href);;
+								reLoadWebsiteList();        		
+		                    } else {
+		                        $('#dialog-add-website').html(json.form);
+		                    }
+				        }
+				    });    
+				    return false;				    
+				}
+				
+				function reLoadWebsiteList() {					
+					$( "#blockListWebsites" ).html('<img src="{{ asset('bundles/lapoizwind/images/loading.gif') }}" alt="Loading Ajax data" />');
+					
+					$.ajax({
+		                type: "GET",
+				        url: "{{ path('_ajax_spot_get_listWebsites', {'id':spot.id}) }}",
+				        cache: false,
+				        success: function(data){
+				        	$('#blockListWebsites').html(data);
+				        }
+				    });    
+				    return false;
+				}
+
+			</script>
+		{% endif %}
+{% endmacro %}

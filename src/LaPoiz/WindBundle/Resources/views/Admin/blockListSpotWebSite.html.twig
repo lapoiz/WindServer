@@ -1,0 +1,27 @@
+{% macro list(website,editEnable) %}
+	
+   		<h3>{{ "admin.list.spot.title" | trans }}</h3>
+		
+		<div id="liste-editable">	
+			<ul>
+			{% for dataWindPrev in website.dataWindPrev %}
+				<li>
+					<a class="link_object"  href="{{ path('_admin_dataWindPrev_display', {'id':dataWindPrev.id}) }}">
+						{{ dataWindPrev.spot.nom }}
+					</a>
+				</li>
+			{% else %}
+				<div id="warning">{{ "warning.spot.notFound" | trans }}</div>
+			{% endfor %}
+			</ul>
+		</div>	
+		
+		<br />
+		
+		{% if editEnable %}
+		<a class="lapoiz_button" href="{{ path('_admin_website_edit', {'id':website.id}) }}">
+			<span class="edit">{{ "admin.button.edit" | trans }}</span>
+		</a>
+		{% endif %}
+		
+{% endmacro %}

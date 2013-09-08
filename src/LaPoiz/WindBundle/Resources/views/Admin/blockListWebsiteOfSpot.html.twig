@@ -1,0 +1,8 @@
+		<ul>
+		{% for dataWindPrev in spot.dataWindPrev %}
+			<li>
+				<a class="link_object" href="{{ path('_admin_dataWindPrev_display', {'id':dataWindPrev.id}) }}">
+					{{ dataWindPrev.website.nom }}</a>
+			</li>
+		{% endfor %}
+		</ul>

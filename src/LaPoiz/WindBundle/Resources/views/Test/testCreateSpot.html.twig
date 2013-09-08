@@ -1,0 +1,19 @@
+{% extends 'LaPoizWindBundle:Admin:index.html.twig' %}
+
+
+ 
+{% block title %}Test create Spot{% endblock %}
+
+
+{% block contenu %}
+	{% include "LaPoizWindBundle:Spot:blockEdit.html.twig" %}
+
+	<button OnClick="sendForm()">Envoyer</button>
+
+	<script>
+		function sendForm() {			
+			$('#editSpotForm').attr('action', '{{ path('_ajax_spot_create') }}');
+			$("#editSpotForm").submit();
+		}
+	</script>
+{% endblock %}
