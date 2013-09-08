@@ -10,7 +10,9 @@ Installation de WindServer
 	```
 
 * Aller dans le repertoir créé
-	```cd WindServer/```
+	```
+	cd WindServer/
+	```
 
 * Installer Composer, si ce n'est pas déjà fait
 	```
@@ -33,6 +35,7 @@ Installation de WindServer
 	```php app/console -version```
 
 * Acceder au script de configuration
+
 	Modifier les droits (souvent nécessaire):
 	```
 	chmod -R 777 app/cache/
@@ -67,12 +70,14 @@ Installation de WindServer
 	```
 
 * Ca devrait marcher:
+
 	Aller avec votre navigateur sur: `http://www.votresite.com/WindServer/web/app_dev.php/index`
 
 
 ### Problème actuel
 
 * Extension intl
+
 	Il existe un problème pour les serveurs mutualisés: l'impossibiliter d'utiliser l'extension intl.
 	Or Symfony2 en a besoin pour la validation des formulaires.
 	Dans notre cas,	lors de l'ajout d'un site, le problème se situe pour les données GPS :
