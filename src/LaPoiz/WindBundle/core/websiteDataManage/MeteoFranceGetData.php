@@ -15,9 +15,7 @@ class MeteoFranceGetData extends WebsiteGetData
 
 	function getDataURL($url) 
 	{
-	    $fp = fopen("../web/tmp/cookies.txt",'wb');	
-		fclose($fp);
-				
+	    		
 		$ch = \curl_init();
 		$user_agent = "Mozilla/5.0 (X11; U; Linux x86_64; fr; rv:1.9.0.1) Gecko/2008072820 Firefox/3.0.1";
 		
@@ -33,7 +31,7 @@ class MeteoFranceGetData extends WebsiteGetData
 		curl_close($ch);
 		$dom = new \DomDocument();
 		@$dom->loadHTML($html);
-		$dom->save('../web/tmp/meteoFrancePage0.txt');
+		//$dom->save('../web/tmp/meteoFrancePage0.txt');
 		return $html; 		 		
 	}
 
