@@ -162,4 +162,32 @@ class WebsiteGetData
 		return $result;
 	}
 	
+	static function transformeKmhByNoeud($windKmh) {
+		return round($windKmh/1.852,0);
+	}
+
+	static function transformeOrientation($orientation) {
+		$result='';
+
+		switch ($orientation) {
+			case 'nord':
+				$result='n';
+				break;
+
+			case 'sud':
+				$result='s';
+				break;
+
+			case 'ouest':
+				$result='w';
+				break;
+
+			case 'est':
+				$result='e';
+				break;
+		}
+		return $result;
+	}
+
+
 }

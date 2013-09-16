@@ -155,41 +155,4 @@ class WindguruGetData extends WebsiteGetData
 		return $data[3].'-'.$data[2].'-'.$data[1];
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	// Delete - 28/03/2013
-	
-	/**
-	static function ChooseData($url)
-	{
-	$tableauData = array();
-	$file = fopen($url,"r");
-			$goodLine="not find";
-			
-			while (!feof($file)) 
-	{
-		// line per line
-			$line = fgets($file); // read a line
-			
-		if (WindguruGetData::isGoodLine($line)) {
-		// choose good line where every data is
-			$goodLine=$line;
-		}
-		}
-		fclose($file);
-		return $goodLine;
-	}
-	
-	static function parseURL($url) {
-	$tableauData = tableauWindData($url);
-	if (sizeof($tableauData)>0) {
-	createPrevisionDate($tableauData);
-	}
-	}*/
 }
