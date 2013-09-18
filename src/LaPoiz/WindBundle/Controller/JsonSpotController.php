@@ -90,6 +90,62 @@ class JsonSpotController extends Controller
 		}
 
 	}
+
+
+	/**
+	 * @Template()
+	*/
+	public function getTestAction($id=null)
+	{
+		
+		$message='';
+		$em = $this->container->get('doctrine.orm.entity_manager');
+		if (isset($id) && $id!=-1)
+		{
+			$spot = $em->find('LaPoizWindBundle:Spot', $id);
+			if (!$spot)
+			{
+				return new JsonResponse(array(
+					'success' => false,
+					'description' => "No spot find in GetAction"
+				));
+			}
+			// Normal way, we find spot
+					
+			// get all website for this spot 
+			//$dataWindPrevList = $this->getDoctrine()->getRepository('LaPoizWindBundle:DataWindPrev')->getFromSpot($spot);
+			
+			$tabJson = TransformeToHighchartsDataTabForJson::createResultJson($spot);
+			//$dataArray = array();
+			 $tabJson->series=array();
+			foreach ($spot->getDataWindPrev() as $dataWindPrev) {
+				$previsionDateList = $this->getDoctrine()->getRepository('LaPoizWindBundle:PrevisionDate')->getLastCreated($dataWindPrev);
+				$tabJson->series[] = TransformeToHighchartsDataTabForJson::transformePrevisionDateList($previsionDateList);
+				//$dataArray[]=$this->transformePrevisionDateListToTab($previsionDateList);
+			}
+			//$tabJson->data=$dataGraph;
+
+			$spotTab = array(
+				'name' => $spot->getNom(),
+				'description' => $spot->getDescription(),
+				'gpsLat'=> $spot->getGpsLat(),
+				'gpsLong'=> $spot->getGpsLong()
+				 );
+
+			return new JsonResponse(array(					
+					'spot' => $spotTab,
+					'dataGraph' => $tabJson
+					)
+				);	
+		} else {
+			return new JsonResponse(array(
+					'success' => false,
+					'description' => "Parameter not found (id of spot)"
+				));
+		}
+
+	}
+
 /*
 
 	private function transformePrevisionDateListToTab($previsionDateList,$spot) {

@@ -23,6 +23,10 @@ _json_spot_data:
   defaults: { _controller: LaPoizWindBundle:JsonSpot:get }
   pattern: /json/spot/data/{id}
 
+_json_spot_data_test:
+  defaults: { _controller: LaPoizWindBundle:JsonSpot:getTest }
+  pattern: /json/spot/data_test/{id}
+
 _json_spot_list:
   defaults: { _controller: LaPoizWindBundle:JsonSpot:list }
   pattern: /json/spot/list
