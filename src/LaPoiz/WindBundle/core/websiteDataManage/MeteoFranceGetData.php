@@ -87,7 +87,7 @@ class MeteoFranceGetData extends WebsiteGetData
 		*/
 		$dom = new \DOMDocument();
 		@$dom->loadHTML($pageHTML);
-		$dom->save('../web/tmp/meteoFrancePage.html');
+		//$dom->save('../web/tmp/meteoFrancePage.html');
 		
 		$tableauData = array();	
 		if (empty($dom)) {
@@ -330,7 +330,7 @@ class MeteoFranceGetData extends WebsiteGetData
 	      
 		$dom = new \DomDocument();
 		@$dom->loadHTML($html);
-		$dom->save('/tmp/meteoFrancePage.txt');
+		//$dom->save('/tmp/meteoFrancePage.txt');
 		return $html; 		
 	}
 
