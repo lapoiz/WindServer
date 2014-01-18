@@ -40,10 +40,12 @@
 	<div id="tabs">
 	    <ul>
 	        <li><a href="#graph"><span>Graph</span></a></li>
+	        <li><a href="#graph2"><span>Graph 2</span></a></li>
 	        <li><a href="#description" id="descriptionTab"><span>description</span></a></li>
 	        {% for dataGraph in dataGraphArray %}
 	        	<li><a href="#{{ dataGraph["dataWindPrev"].webSite.nom }}"><span>{{ dataGraph["dataWindPrev"].website.nom }}</span></a></li>
 	        {% endfor %}
+	        <li><a href="#historique"><span>Historique</span></a></li>
 	    </ul>
 	    
 	   	<div id="graph">	   			   		
@@ -51,6 +53,12 @@
 	   			{{ view(dataGraphArray,xAxisGraphData) }}		   	
 	   	</div>
 	    
+
+	   	<div id="graph2">	   			   		
+	   			{% from "LaPoizWindBundle:Spot:Graph/blockGraph.html.twig" import view %}
+	   			{{ view(spot) }}		   	
+	   	</div>
+
 	   	<div id="description">
 			{% from "LaPoizWindBundle:Spot:blockDescription.html.twig" import view %}
 	   		{{ view(spot,1) }}
@@ -64,9 +72,12 @@
 	   			{% from "LaPoizWindBundle:DataWindPrev:blockGraph.html.twig" import view %}
 	   			{{ view(dataGraph["dataWindPrev"].website.nom, dataGraph["dataGraph"]) }}				
 	   		</div>
-	        	
 	     {% endfor %}
 	 
+	   	<div id="historique">
+			{% from "LaPoizWindBundle:Spot:blockHistorique.html.twig" import view %}
+	   		{{ view(spot) }}
+	   	</div>
 	</div>
 	    
 {% endblock %}

@@ -20,8 +20,8 @@ _index:
   pattern: /index 
 
 _json_spot_data:
-  defaults: { _controller: LaPoizWindBundle:JsonSpot:get }
-  pattern: /json/spot/data/{id}
+  defaults: { _controller: LaPoizWindBundle:JsonSpot:get, renderTo: null }
+  pattern: /json/spot/data/{id}/{renderTo}
 
 _json_spot_data_test:
   defaults: { _controller: LaPoizWindBundle:JsonSpot:getTest }
@@ -39,9 +39,14 @@ _spot_display:
   defaults: { _controller: LaPoizWindBundle:Spot:display }
   pattern: /spot/display/{id}
 
+_ajax_spot_history_data_for_dateprev:
+  defaults: { _controller: LaPoizWindBundle:AjaxDataWindPrev:spotHistoryDataForDatePrev }
+  pattern: /spot/ajax/dataWindPrev/history/data/date_prev/{id}/{date}
+
+
 _admin:
   pattern: /admin
-  defaults: { _controller: LaPoizWindBundle:Admin:index }
+  defaults: { _controller: LaPoizWindBundle:AdminSpot:list }
 
 _admin_spots:
   defaults: { _controller: LaPoizWindBundle:AdminSpot:list }
@@ -150,7 +155,6 @@ _ajax_dataWindPrev_test_remove_previsionDate:
   defaults: { _controller: LaPoizWindBundle:AjaxDataWindPrevGetData:removePrevisionDate }
   pattern: /admin/ajax/dataWindPrev/test/remove/previsionDate/{id}
 
-
 _ajax_dataWindPrev_history_data_from_date_analyse:
   defaults: { _controller: LaPoizWindBundle:AjaxDataWindPrev:historyDataFromDateAnalyse }
   pattern: /admin/ajax/dataWindPrev/history/data/date_analyse/{id}/{date}
@@ -159,6 +163,10 @@ _ajax_dataWindPrev_history_data_for_dateprev:
   defaults: { _controller: LaPoizWindBundle:AjaxDataWindPrev:historyDataForDatePrev }
   pattern: /admin/ajax/dataWindPrev/history/data/date_prev/{id}/{date}
 
+
+_ajax_spot_data_from_date_filtre:
+  defaults: { _controller: LaPoizWindBundle:AjaxSpot:dataForFilterDate }
+  pattern: /spot/ajax/dataWindPrev/data/date/{id}/{date}
 
 
 _tests:

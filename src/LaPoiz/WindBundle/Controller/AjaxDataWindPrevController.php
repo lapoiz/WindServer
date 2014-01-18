@@ -73,6 +73,26 @@ class AjaxDataWindPrevController extends Controller
 				array(	'errMessage' => "Error bad parameter (dataWindPrev.id miss)" ));
 		}
 	}
+
+	/**
+	 * @Template()
+	 */
+	// for testing: http://localhost/WindServer/web/app_dev.php/spot/ajax/dataWindPrev/history/data/date_prev/2/2013-10-10
+	public function spotHistoryDataForDatePrevAction($id=null,$date=null)
+	{
+		$message='';
+		if (isset($id)) {
+			$result=$this->historyDataForDatePrev($id,$date);
+			
+			return $this->container->get('templating')->renderResponse(
+				'LaPoizWindBundle:Spot:Ajax/blockHistoryPrevisionForOneDate.html.twig',
+				$result);
+		} else {
+			return $this->container->get('templating')->renderResponse(
+				'LaPoizWindBundle:Default:errorPage.html.twig',
+				array(	'errMessage' => "Error bad parameter (dataWindPrev.id miss)" ));
+		}
+	}
 	
 	/**
 	* @Template()
@@ -95,6 +115,7 @@ class AjaxDataWindPrevController extends Controller
 	}
 		
 	public function historyDataForDatePrev($id,$date) {
+		$date = $this->getDateGoodFormat($date);
 		$em = $this->container->get('doctrine.orm.entity_manager');
 		$dataWindPrev = $em->find('LaPoizWindBundle:DataWindPrev', $id);
 		$listPrevisionDate = $this->getDoctrine()
@@ -105,10 +126,26 @@ class AjaxDataWindPrevController extends Controller
 					'listPrevisionDate' =>$listPrevisionDate);
 	}
 	
+	private function getDateGoodFormat($date) {
+		$dateTime = null;
+		$date = trim($date);
+
+		if (preg_match( '`^\d{4}-\d{1,2}-\d{1,2}$`' , $date ))
+			return $date;
+		elseif (preg_match( '`^\d{1,2}/\d{1,2}/\d{4}$`' , $date ))		
+			$dateTime = \DateTime::createFromFormat('d/m/Y', $date);
+		elseif (preg_match( '`^\d{1,2}-\d{1,2}-\d{4}$`' , $date )) {
+			$dateTime = \DateTime::createFromFormat('d-m-Y', $date);
+		} else {
+			return $date;
+		}
+		return $dateTime->format('Y-m-d');
+	}
+
 	/**
 	* @Template()
 	*/
-	// for testing: http://localhost/WindServer/web/app_dev.php/ajax/dataWindPrev/history/data/date_analyse/2/2012-02-21
+	// for testing: http://localhost/WindServer/web/app_dev.php/admin/ajax/dataWindPrev/history/data/date_analyse/2/2013-09-15
 	public function historyDataFromDateAnalyseAction($id=null,$date=null)
 	{
 		$message='';

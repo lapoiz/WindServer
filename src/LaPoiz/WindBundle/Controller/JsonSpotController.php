@@ -40,7 +40,7 @@ class JsonSpotController extends Controller
 	/**
 	 * @Template()
 	*/
-	public function getAction($id=null)
+	public function getAction($id=null, $renderTo=null)
 	{
 		
 		$message='';
@@ -60,7 +60,7 @@ class JsonSpotController extends Controller
 			// get all website for this spot 
 			//$dataWindPrevList = $this->getDoctrine()->getRepository('LaPoizWindBundle:DataWindPrev')->getFromSpot($spot);
 			
-			$tabJson = TransformeToHighchartsDataTabForJson::createResultJson($spot);
+			$tabJson = TransformeToHighchartsDataTabForJson::createResultJson($spot,$renderTo);
 			//$dataArray = array();
 			 $tabJson->series=array();
 			foreach ($spot->getDataWindPrev() as $dataWindPrev) {

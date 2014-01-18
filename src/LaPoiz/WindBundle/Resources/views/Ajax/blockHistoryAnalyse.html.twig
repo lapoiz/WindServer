@@ -1,4 +1,11 @@
 	<table class="data">
+    <div>
+        By default is since 1 month<br />
+        Each line is a PrevisionDate (parse of a website)<br />
+        First col: date and hour when the data was getting.<br />
+        Other col: date of the prevision and number of data for this prevision date.<br />
+    </div>
+    <br />
     {% for line in tabHistoryAnalyse %}
     	<tr>
     		<td>{{ line[0] | date("d/m/Y") }} <br />

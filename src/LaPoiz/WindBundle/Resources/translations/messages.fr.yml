@@ -1,10 +1,9 @@
-
-# Texte en Français 
-
+#####################
+# Texte en Français #
+#####################
 # Texte du fil d'ariane
 ariane.home: Acceuil
 ariane.websites: Les sites web
-
 
 # Texte des Titres
 admin.websites.title: LaPoizWind - Admin - Websites
@@ -15,6 +14,12 @@ admin.dataWindPrev.title: Prévision pour un spot par un site web
 spot.list.title: Liste des spots
 spot.general.title: Génèral
 spot.localisation.title: Localisation
+
+spot.historique.date.prevision.label: Prévision pour le (dd-mm-yyyy)
+spot.history.prevision.one.date.title.date: Prévision pour le 
+spot.history.prevision.one.date.title.table: Prévision du
+
+
 
 website.index.title.page: LaPoizWind - Liste des sites web
 website.index.title: Liste des sites web
@@ -41,19 +46,21 @@ admin.dataWindPrev.display.label.url: url
 
 admin.dataWindPrev.test.label.step: étape
 admin.dataWindPrev.test.label.step.error: Error: aucune étape réalisé
-admin.dataWindPrev.test.label.step.start: Etape réalisée  
-admin.dataWindPrev.test.label.step.getPage: Récupération de la page, réalisée 
-admin.dataWindPrev.test.label.step.analyse: Analyse de la page, réalisée 
+admin.dataWindPrev.test.label.step.start: Etape réalisée
+admin.dataWindPrev.test.label.step.getPage: Récupération de la page, réalisée
+admin.dataWindPrev.test.label.step.analyse: Analyse de la page, réalisée
 admin.dataWindPrev.test.label.step.transforme: Transformation des données, fini
-admin.dataWindPrev.test.label.step.save: Sauvegarde réalisée  
+admin.dataWindPrev.test.label.step.save: Sauvegarde réalisée
 admin.dataWindPrev.test.label.chrono: temps (ms)
 admin.dataWindPrev.label.success.remove.prevDate: effacé
 
 admin.previsionDate.label.created: crée le
 admin.previsionDate.label.datePrev: Prévision pour le
 
-admin.dataWindPrev.analyse.date.analyse: date de l'analyse
-admin.dataWindPrev.analyse.date.prevision: date de prevision
+admin.dataWindPrev.analyse.date.analyse: date de l'analyse (yyyy-mm-dd)
+admin.dataWindPrev.analyse.date.analyse.title.date: Analyse réalisé le 
+admin.dataWindPrev.analyse.date.prevision: date de prevision  (yyyy-mm-dd)
+admin.dataWindPrev.analyse.date.prevision.title.date: Prévision pour le  
 
 admin.website.label.name: Nom
 admin.website.label.url: URL

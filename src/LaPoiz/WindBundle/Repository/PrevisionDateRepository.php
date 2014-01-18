@@ -13,6 +13,7 @@ use Doctrine\ORM\EntityRepository;
 class PrevisionDateRepository extends EntityRepository
 {
 	// date on Y-m-d format
+	// return previsionDate from id of DataWindPrev and a date
 	public  function getFromOneWebSiteForOneDay($dataWindPrevId,$date) {	
 		$queryBuilder = $this->createQueryBuilder('previsionDate');
 		

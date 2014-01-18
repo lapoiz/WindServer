@@ -58,8 +58,8 @@ class TransformeToHighchartsDataTabForJson   {
 						//"xAxisData" => $xAxisData);	
 	}
 
-	static function createResultJson($spot) {
-		$spotJsonObject=new SpotJsonObject($spot->getNom());
+	static function createResultJson($spot, $renderTo) {
+		$spotJsonObject=new SpotJsonObject($spot->getNom(), $renderTo);
 		return $spotJsonObject;
 	}
 
