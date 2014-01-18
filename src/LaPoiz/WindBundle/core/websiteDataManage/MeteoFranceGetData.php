@@ -6,7 +6,19 @@ use LaPoiz\WindBundle\Entity\Prevision;
 
 class MeteoFranceGetData extends WebsiteGetData
 {
-	const goodUlClass= 'clearBoth';
+	const goodDivClass= 'mod-previsions-affichage clearfix';
+	const dayDivClass= 'bloc-day-summary ';
+	const dayDivClass2= 'bloc-day-summary first active';
+	const detailDayDivId= 'ajax-day-detail';
+	const detailDateHoureDivClass= 'bloc-day-summary';
+	const tempDivClass= 'day-summary-temperature';
+	const windDivClass= 'day-summary-wind-info';
+	const windSpanClass= 'vent-detail-vitesse';
+	const windMaxSpanClass= 'vent-detail-type';
+	const orientationSpanClass= 'picVent *';
+	const prefixIddetailDayDiv= 'detail-';
+
+
 	const tempClass= 'minmax';
 	const windClass= 'vents';
 	//const detailDdClass= 'detail';
@@ -32,123 +44,128 @@ class MeteoFranceGetData extends WebsiteGetData
 		$dom = new \DomDocument();
 		@$dom->loadHTML($html);
 		//$dom->save('../web/tmp/meteoFrancePage0.txt');
+
 		return $html; 		 		
 	}
 
 	function analyseData($pageHTML,$url) {
-		/*
-			html: 
-			<ul class="clearBoth">
-				<li class="jour  jourNoJs">
-					<dl>
-						<dt>Aujourd'hui</dt>
-						<dd class=.... général
-						<dd ...
-						<dd class="detail">
-							<div class="bloc_details">
-								<ul class="echeances total2">
-									<li>
-										<dl class="">
-											<dt>SoirÃ©e</dt>
-											<dd><img alt="Nuit claire" src="meteo/pictos/web/SITE/80/0_b.gif" title="Nuit claire" /></dd>
-											<dd class="minmax">17Â°C</dd>
-											<dd class="ressent">(Ressentie <strong>17Â°C</strong>)</dd>
-											<dd class="vents">Vent 
-												<span class="picVents dd_ONO" title="Vent ouest-nord-ouest">Vent ouest-nord-ouest</span>
-												<strong>20 km/h</strong>
-											</dd>
-											<dd class="vents">Rafales <strong>-</strong></dd>
-										</dl>
-									</li>
-									<li>
-										<dl class="last">
-											<dt>Nuit</dt>
-											<dd><img alt="Nuit claire" src="meteo/pictos/web/SITE/80/0_b.gif" title="Nuit claire" /></dd>
-											<dd class="minmax">15Â°C</dd>
-											<dd class="ressent">(Ressentie <strong>15Â°C</strong>)</dd>
-											<dd class="vents">Vent 
-											<span class="picVents dd_NO" title="Vent nord-ouest">Vent nord-ouest</span>
-											<strong>5 km/h</strong>
-											</dd>
-											<dd class="vents">Rafales <strong>-</strong></dd>
-										</dl>
-									</li>
-								</ul><!-- .echeances -->
-							</div>
-							<!-- .bloc_details -->
-						</dd>
-					</dl>
-				</li>
-
-				<li class="jour  jourNoJs">
-					<dl>
-						<dt>Lundi 16</dt>
-						...
-		*/
+		
 		$dom = new \DOMDocument();
 		@$dom->loadHTML($pageHTML);
-		//$dom->save('../web/tmp/meteoFrancePage.html');
+		$dom->save('../web/tmp/meteoFrancePage.html');
 		
 		$tableauData = array();	
+		$tableauDataResult = array();	
 		if (empty($dom)) {
 			return null;
 		} else	{
-			$ul=MeteoFranceGetData::getGoodUl($dom);	
-			if (empty($ul)){
-				echo '<br />Element not find is ul class="'.MeteoFranceGetData::goodUlClass.'" ... correct ?<br /><';
+			$divAll=MeteoFranceGetData::getGoodDiv($dom);	
+			if (empty($divAll)){
+				echo '<br />Element not find is div class="'.MeteoFranceGetData::goodDivClass.'" ... correct ?<br /><';
 			} else {
-				$days = $ul->childNodes; // get all li
+				$days = $divAll->getElementsByTagName('div'); // get all days
 
 				foreach ($days as $day){
-					
-					// for each day (=li)
-					$dayDL = $day->firstChild; // only one per <li>
-
-					$date= MeteoFranceGetData::getDate($dayDL);
-
-					$divDetail= MeteoFranceGetData::getDivDetail($dayDL);
-
-					$listDlDetail = $divDetail->getElementsByTagName('dl');
-
-					foreach ($listDlDetail as $detailDl){
-						$previsionTab = array();
-						$time = $detailDl->getElementsByTagName('dt')->item(0)->nodeValue;
-						$temp='';
-						$wind='';
-						$windMax='';
-						$orientation='';
-
-						$listDdDetail = $detailDl->getElementsByTagName('dd');
-						foreach ($listDdDetail as $detailDd){
-							$detailDdClass = $detailDd->getAttribute('class');
-							if ($detailDdClass==MeteoFranceGetData::tempClass) {
-								$temp = $detailDd->nodeValue;
-							} elseif ($detailDdClass==MeteoFranceGetData::windClass) {
-								// vent ou rafale
-								$spanVent=$detailDd->getElementsByTagName('span');
-								if ($spanVent->length>0) {
-									// vent
-									$orientation = $spanVent->item(0)->nodeValue;
-									$wind = $detailDd->getElementsByTagName('strong')->item(0)->nodeValue;
-								} else {
-									// rafale
-									$windMax=$detailDd->getElementsByTagName('strong')->item(0)->nodeValue;
-								}
-							}
-						}
+					$detailDivClass = $day->getAttribute('class');
+					if ($detailDivClass==MeteoFranceGetData::dayDivClass or $detailDivClass==MeteoFranceGetData::dayDivClass2) {
+						$dateId = MeteoFranceGetData::getDateId($day);
+						/*
+							<div class="loading"> <div class="img"/> </div> 
+							<div class="box"> 
+								<div class="box-header"> 
+									<h3 class="day-summary-title">Aujourd'hui</h3> 
+								</div> 
+								<div class="box-body"> 
+									...
+								</div> 
+							</div> 
+						*/
+						$date= MeteoFranceGetData::getDate($day);
+						
 						$previsionTab['date'] = $date;
-						$previsionTab['time'] = $time;
-						$previsionTab['temp'] = $temp;
-						$previsionTab['wind'] = $wind;
-						$previsionTab['windMax'] = $windMax;
-						$previsionTab['orientation'] = $orientation;
+						$previsionTab['dateId'] = $dateId;
 						$tableauData[]=$previsionTab;
 					}
 				}
+				$detailDiv = MeteoFranceGetData::getDetailDiv($dom);
 
-			}
-		}
-		return $tableauData;
+				foreach ($tableauData as $previsionTab) {
+					$detailDateDiv = MeteoFranceGetData::getDetailDateDiv($dom,$previsionTab['dateId']);
+					
+					foreach ($detailDateDiv->getElementsByTagName('div') as $detailDateHoureDiv) {
+						/* 			 
+ 				<div class="bloc-day-summary"> 
+ 					<div class="box"> 
+ 						<div class="box-header"> 
+ 							<h4 class="day-summary-title">Matin</h4> 
+ 						</div> 
+ 						<div class="box-body"> 
+ 							... 
+ 						</div> 
+ 					</div> 
+ 				</div> 
+ 				...  			
+					*/
+							$detailDateHoureDivClass = $detailDateHoureDiv->getAttribute('class');
+							if ($detailDateHoureDivClass==MeteoFranceGetData::detailDateHoureDivClass) {
+								
+					/* 			 
+ 						<div class="box-header"> 
+ 							<h4 class="day-summary-title">Matin</h4> 
+ 						</div> 
+ 						<div class="box-body"> 
+ 							<div class="day-summary-temperature"> 12°C | <strong>13°C</strong> </div> 
+ 							<div class="day-summary-ressentie"> Ressentie 10 °C | <strong>11 °C</strong> </div> 
+ 							<div class="day-summary-image"> <span class="picTemps J_W1_12-N_3">Pluies orageuses</span> </div> 
+ 							<div class="day-summary-broad">Pluies orageuses</div> 
+ 							<div class="day-summary-wind"> 
+ 								<div class="day-summary-wind-info"> 
+ 									<span class="picVent V_E">Vent est</span> 
+ 									<span class="vent-detail-vitesse">Vent 18km/h</span> 
+ 									<span class="vent-detail-type"/> 
+ 								</div> 
+ 							</div> 
+ 						</div> 
+					*/
+	 							$time='';
+								$temp='';
+								$wind='';
+								$windMax='';
+								$orientation='';
+
+								$time = MeteoFranceGetData::getTime($detailDateHoureDiv);
+								$divs = $detailDateHoureDiv->getElementsByTagName('div');					
+								foreach ($divs as $div) {
+									if ($div -> getAttribute('class')==MeteoFranceGetData::tempDivClass) {
+										$temp=$div->nodeValue;
+									} elseif ($div -> getAttribute('class')==MeteoFranceGetData::windDivClass) {
+										$orientation=$div->getElementsByTagName('span')->item(0)->nodeValue;
+									} 
+
+								} 
+								$spans = $detailDateHoureDiv->getElementsByTagName('span');					
+								foreach ($spans as $span) {
+									if ($span -> getAttribute('class')==MeteoFranceGetData::windSpanClass) {
+										$wind=$span->nodeValue;
+									} elseif ($span -> getAttribute('class')==MeteoFranceGetData::orientationSpanClass) {
+										$orientation=$span->nodeValue;									
+									} elseif ($span -> getAttribute('class')==MeteoFranceGetData::windMaxSpanClass) {
+										$windMax=$span->nodeValue;
+									} 
+								}
+								$previsionTab['time'] = $time;
+								$previsionTab['temp'] = $temp;
+								$previsionTab['wind'] = $wind;
+								$previsionTab['windMax'] = $windMax;
+								$previsionTab['orientation'] = $orientation;
+								$tableauDataResult[] = $previsionTab;
+							}//if
+					}//for		
+				}//for	
+				
+			}// else
+		}// else
+		return $tableauDataResult;
 	}
 
 	function transformData($tableauData) {
@@ -189,33 +206,62 @@ class MeteoFranceGetData extends WebsiteGetData
 
 
 	// find the div where table of data is
-	static private function getGoodUl($dom) {
-		$uls = $dom->getElementsByTagName('ul');
-		$ulFind=null;
-		foreach ($uls as $ul) {
-			if ($ul -> getAttribute('class')==MeteoFranceGetData::goodUlClass) {
-				$ulFind=$ul;
-			}
-		}
-		return $ulFind;
-	}
-
-	// find the value of the date in the dl of the day
-	static private function getDate($dayDL) {
-		return $dayDL->getElementsByTagName('dt')->item(0)->nodeValue;
-	}
-
-	// find the div of the detail in the dl day
-	static private function getDivDetail($dayDL) {
-		$divs = $dayDL->getElementsByTagName('div');
+	static private function getGoodDiv($dom) {
+		$divs = $dom->getElementsByTagName('div');
 		$divFind=null;
 		foreach ($divs as $div) {
-			if ($div -> getAttribute('class')==MeteoFranceGetData::detailDivClass) {
+			if ($div -> getAttribute('class')==MeteoFranceGetData::goodDivClass) {
 				$divFind=$div;
 			}
 		}
 		return $divFind;
 	}
+
+	
+	/*
+		<div class="bloc-day-summary first active" id="day-symmary-id-00001"> 
+	*/
+	static private function getDateId($day) {
+		return $day->getAttribute('id');
+	}
+
+	// find the value of the date in the h3
+	/*
+		<h3 class="day-summary-title">Aujourd'hui</h3>
+		ou
+		<h3 class="day-summary-title">samedi 18</h3> 
+	*/
+	static private function getDate($day) {
+		return $day->getElementsByTagName('h3')->item(0)->nodeValue;
+	}
+
+	/*
+		<h4 class="day-summary-title">Matin</h4> 
+	*/
+	static private function getTime($detailDateHoureDiv) {
+		return $detailDateHoureDiv->getElementsByTagName('h4')->item(0)->nodeValue;
+	}
+
+	/*	
+		<div class="group-day-detail hide-id-js" id="detail-day-symmary-id-00002" style="display: none;"> 
+	*/
+	static private function getDetailDiv($div) {
+		return $div->getElementById(MeteoFranceGetData::detailDayDivId);
+	}
+
+	/*	
+		<div class="group-day-detail hide-id-js" id="detail-day-symmary-id-00002" style="display: none;"> 
+	*/
+	static private function getDetailDateDiv($div,$dateId) {
+		return $div->getElementById(MeteoFranceGetData::prefixIddetailDayDiv.$dateId);
+	}
+
+			
+
+
+
+
+
 
 	// input: Aujourd'hui / Mardi 17
 	// return: 2013-09-16
@@ -251,7 +297,7 @@ class MeteoFranceGetData extends WebsiteGetData
 		return $htmlValue;
 	}
 
-	// input: 15Â°C
+	// input: 15Â°C   ou 12°C | 13°C
 	// return: 15
 	static private function getTempClean($htmlValue) {
 		if (preg_match('#[0-9]+#',$htmlValue,$value)>0) {
@@ -261,12 +307,13 @@ class MeteoFranceGetData extends WebsiteGetData
 		}
 	}
 
-	// input: 30 km/h 
+	// input: Vent 18km/h
 	// return: 13
 	static private function getWindClean($htmlValue) {
-		if (preg_match('#[0-9]+#',$htmlValue,$value)>0) {
-			$wind = $value[0];
-			return WebsiteGetData::transformeKmhByNoeud($htmlValue);
+		if (preg_match('#^Vent (?<wind>[0-9]+)#',$htmlValue,$value)>0) {
+			$wind = $value['wind'];
+			//return $wind;
+			return WebsiteGetData::transformeKmhByNoeud($wind);
 		} else {
 			return "?";
 		}
@@ -294,12 +341,12 @@ class MeteoFranceGetData extends WebsiteGetData
 		}		
 	}
 
-	// input: 55 km/h 
+	// input: Rafales 65 km/h
 	// return: 21
 	static private function getMaxWindClean($htmlValue) {
-		if (preg_match('#[0-9]+#',$htmlValue,$value)>0) {
-			$wind = $value[0];
-			return WebsiteGetData::transformeKmhByNoeud($htmlValue);
+		if (preg_match('#^Rafales (?<windMax>[0-9]+)#',$htmlValue,$value)>0) {
+			$windMax = $value['windMax'];
+			return WebsiteGetData::transformeKmhByNoeud($windMax);
 		} else {
 			return "?";
 		}
