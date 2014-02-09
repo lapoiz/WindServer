@@ -52,7 +52,7 @@ class MeteoFranceGetData extends WebsiteGetData
 		
 		$dom = new \DOMDocument();
 		@$dom->loadHTML($pageHTML);
-		$dom->save('../web/tmp/meteoFrancePage.html');
+		//$dom->save('../web/tmp/meteoFrancePage.html');
 		
 		$tableauData = array();	
 		$tableauDataResult = array();	
