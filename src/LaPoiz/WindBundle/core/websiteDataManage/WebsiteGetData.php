@@ -132,7 +132,7 @@ class WebsiteGetData
 				$prev->setOrientation($dataPrev["orientation"]);
 				$prev->setWind($dataPrev["wind"]);
 				$hour=new \DateTime();
-				if (isset($dataPrev["heure"]) && !empty($dataPrev["heure"])) {
+				if (isset($dataPrev["heure"]) && !empty($dataPrev["heure"]) && strlen($dataPrev["heure"])>0) {
 					$hour->setTime($dataPrev["heure"], "00");
 				} else {
 					$hour->setTime("01", "00");
