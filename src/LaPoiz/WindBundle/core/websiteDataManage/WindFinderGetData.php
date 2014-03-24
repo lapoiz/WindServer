@@ -165,6 +165,8 @@ class WindFinderGetData extends WebsiteGetData
 	}
 	// Tuesday,� Aug� 17	
 	static private function getDatePrevFromHTML($htmlData) {
+		//$this->get('logger')->err('htmlDate:'+$htmlData);
+        $htmlData = trim($htmlData);
 		preg_match('#([0-9]{2})$#',$htmlData,$data);
 		$test=date('d');
 		$test='';
