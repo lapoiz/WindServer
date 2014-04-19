@@ -40,7 +40,6 @@
 	<div id="tabs">
 	    <ul>
 	        <li><a href="#graph"><span>Graph</span></a></li>
-	        <li><a href="#graph2"><span>Graph 2</span></a></li>
 	        <li><a href="#description" id="descriptionTab"><span>description</span></a></li>
 	        {% for dataGraph in dataGraphArray %}
 	        	<li><a href="#{{ dataGraph["dataWindPrev"].webSite.nom }}"><span>{{ dataGraph["dataWindPrev"].website.nom }}</span></a></li>
@@ -62,9 +61,7 @@
 		 	<div id="{{ dataGraph["dataWindPrev"].website.nom }}">
 				{% from "LaPoizWindBundle:DataWindPrev:blockDisplay.html.twig" import view %}
 	   			{{ view(dataGraph["dataWindPrev"]) }}
-	   			
-	   			{% from "LaPoizWindBundle:DataWindPrev:blockGraph.html.twig" import view %}
-	   			{{ view(dataGraph["dataWindPrev"].website.nom, dataGraph["dataGraph"]) }}				
+
 	   		</div>
 	     {% endfor %}
 	 
