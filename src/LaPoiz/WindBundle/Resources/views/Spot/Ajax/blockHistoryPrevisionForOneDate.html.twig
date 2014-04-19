@@ -1,0 +1,14 @@
+    <h2>{{ "spot.history.prevision.one.date.title.date" | trans }} {{ date | date("d/m/Y") }}</h2>
+    <table class="data">
+        <tr><td>{{ "spot.history.prevision.one.date.title.table" | trans }}</td></tr>
+    {% for previsionDate in listPrevisionDate %}
+        <tr>
+            <td>{{ previsionDate.created | date("d/m/Y") }}</td>
+        {% for prevision in previsionDate.listPrevision %}
+            <td>
+                {{ prevision.time | date("h") }}h : {{ prevision.wind }} 
+            </td>
+        {% endfor %}
+        </tr>
+    {% endfor %}
+    </table>
