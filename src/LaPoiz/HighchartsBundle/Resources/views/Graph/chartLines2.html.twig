@@ -4,29 +4,6 @@
 	$(function () {
     var chart;
     $(document).ready(function() {
-
-        Highcharts.setOptions({
-            lang: {
-                loading: 'Chargement...',
-                months: ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'],
-                weekdays: ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'],
-                shortMonths: ['jan', 'fév', 'mar', 'avr', 'mai', 'juin', 'juil', 'aoû', 'sep', 'oct', 'nov', 'déc'],
-                exportButtonTitle: "Exporter",
-                printButtonTitle: "Imprimer",
-                rangeSelectorFrom: "Du",
-                rangeSelectorTo: "au",
-                rangeSelectorZoom: "Période",
-                downloadPNG: 'Télécharger en PNG',
-                downloadJPEG: 'Télécharger en JPEG',
-                downloadPDF: 'Télécharger en PDF',
-                downloadSVG: 'Télécharger en SVG',
-                resetZoom: "Réinitialiser le zoom",
-                resetZoomTitle: "Réinitialiser le zoom",
-                thousandsSep: " ",
-                decimalPoint: ','
-            }
-        });
-
         chart = new Highcharts.Chart({
             chart: {
                 renderTo: '{{ idDivChart }}',
@@ -41,7 +18,11 @@
             xAxis: {
             	 plotBands: [
             	{% for dateGraph in xAxisGraphData %}
-
+            	{
+                	color: '{% if loop.index is divisibleby(2) %}white{% else %}rgba(0, 0, 0, 0.05){% endif %}',
+                	from: Date.UTC({{ dateGraph['from']['year'] }}, {{ dateGraph['from']['month'] }}, {{ dateGraph['from']['day'] }}),
+                	to: Date.UTC({{ dateGraph['to']['year'] }}, {{ dateGraph['to']['month'] }}, {{ dateGraph['to']['day'] }}),
+                },
                 {
                 	color: 'rgba(60, 170, 210, 0.2)',
                 	from: Date.UTC({{ dateGraph['from']['year'] }}, {{ dateGraph['from']['month'] }}, {{ dateGraph['from']['day'] }}, 9),
@@ -86,6 +67,16 @@
                     color: 'rgba(0, 0, 0, 0)',
                     label: {
                         text: 'kite planning',
+                        style: {
+                            color: '#606060'
+                        }
+                    }
+                }, { // windsurf planning
+                    from: 22,
+                    to: 40,
+                    color: 'rgba(68, 170, 213, 0.1)',
+                    label: {
+                        text: 'windsurf planning',
                         style: {
                             color: '#606060'
                         }
