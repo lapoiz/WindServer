@@ -1,0 +1,43 @@
+{% macro view(spot) %}
+		
+	<form name="datePrevForm">	
+		<label for="datePrevision">{{ "spot.historique.date.prevision.label" | trans }}</label>
+		<input type="date" name="datePrevision" value="">
+		<select name="dataWindPrevId">	
+		{% for dataWindPrev in spot.dataWindPrev %}			
+				<option value={{dataWindPrev.id}}>
+					{{ dataWindPrev.website.nom }}
+				</option>
+		{% endfor %}	
+		</select>
+	</form>	
+	<button class="button_action"  onClick="getDataForDatePrevision();" >
+		<span class="display">{{ "admin.dataWindPrev.button.analyse.display" | trans }}</span>
+	</button>
+
+	<div id="result"></div>
+		
+<script>
+
+function getDataForDatePrevision(){
+	$('#result').html('<img src="{{ asset('bundles/lapoizwind/images/loading.gif') }}" alt="Loading Ajax data" />');
+	
+    var id = document.forms["datePrevForm"].elements["dataWindPrevId"].value;
+	var url= "{{ path('_ajax_spot_history_data_for_dateprev', {'id':'dataWindPrevSelected', 'date':'datePrevisionInput'})}}";
+	url=url.replace('datePrevisionInput',document.forms["datePrevForm"].elements["datePrevision"].value);
+	url=url.replace('dataWindPrevSelected',document.forms["datePrevForm"].elements["dataWindPrevId"].value);
+	
+    $.ajax({
+        type: "POST",
+        url: url,
+        id: id,
+        cache: false,
+        success: function(data){
+           $('#result').html(data);
+        }
+    });    
+    return false;
+};
+</script>	
+
+{% endmacro %}
