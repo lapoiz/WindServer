@@ -1,7 +1,7 @@
 {% macro view(dataGraph,xAxisGraphData) %}
 		
 	<div id="divGraph">graphe here</div>
-	<div id="divTable">Table here</div>
+	<div id="divTable"></div>
 	    
 	{% from "LaPoizHighchartsBundle:Graph:chartLines.html.twig" import scriptLine %}    	
 		{{ scriptLine("divGraph","divTable", dataGraph, xAxisGraphData) }}
